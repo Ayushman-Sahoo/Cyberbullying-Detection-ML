@@ -13,6 +13,7 @@ This project is a Machine Learning based Cyberbullying Detection System that ide
 * FastAPI backend integration
 * Machine Learning based prediction
 * Real-time prediction results
+* Confidence score and probability display
 
 ---
 
@@ -30,11 +31,11 @@ This project is a Machine Learning based Cyberbullying Detection System that ide
 ## Project Structure
 
 ```text
-backend/       -> FastAPI backend files
-frontend/      -> HTML frontend pages
-model/         -> Machine learning model files
-requirements.txt -> Required Python libraries
-cyberbullying_app.py -> Main application file
+backend/                  -> FastAPI backend files
+frontend/                 -> HTML frontend pages
+model/                    -> Machine learning model files
+requirements.txt          -> Required Python libraries
+cyberbullying_app.py      -> Main application file
 ```
 
 ---
@@ -61,13 +62,16 @@ pip install -r requirements.txt
 ### Run Backend
 
 ```bash
-cd backend
-uvicorn main:app --reload
+python cyberbullying_app.py
 ```
 
 ### Open Frontend
 
-Open `frontend/index.html` in browser.
+Open in browser:
+
+```text
+http://127.0.0.1:8000
+```
 
 ---
 
@@ -82,6 +86,33 @@ You are stupid
 ```text
 Cyberbullying Detected
 ```
+
+---
+
+## Project Screenshots
+
+### Main Frontend Interface
+![Frontend](1.png)
+
+---
+
+### Backend Server Running
+![Backend](2.png)
+
+---
+
+### Non-Harmful Prediction Output
+![Non Harmful](3.png)
+
+---
+
+### Harmful Prediction Output
+![Harmful](4.png)
+
+---
+
+### Raw Prediction Output
+![Raw Output](5.png)
 
 ---
 
