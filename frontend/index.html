@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cyberbullying Detection | Text Safety Lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --danger: #dc2626;
+      --success: #16a34a;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --border: #e2e8f0;
+      --text: #0f172a;
+      --text-muted: #64748b;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    h1 {
+      font-size: 30px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      margin-top: 8px;
+      font-size: 16px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      font-weight: 600;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 170px;
+      resize: vertical;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      font-family: inherit;
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+      align-items: center;
+    }
+
+    button {
+      border: 1px solid transparent;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      background: var(--primary);
+      color: #fff;
+    }
+
+    button:hover { background: var(--primary-hover); }
+
+    .btn-secondary {
+      background: #fff;
+      color: var(--text);
+      border-color: var(--border);
+    }
+
+    .btn-secondary:hover { background: #f1f5f9; }
+
+    .link-btn {
+      margin-left: auto;
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .link-btn:hover { text-decoration: underline; }
+
+    .result {
+      display: none;
+      margin-top: 24px;
+      border-top: 1px solid var(--border);
+      padding-top: 20px;
+    }
+
+    .result.active { display: block; }
+
+    .pill {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      margin-left: 10px;
+      vertical-align: middle;
+    }
+
+    .pill-danger { background: #fef2f2; color: var(--danger); }
+    .pill-safe { background: #f0fdf4; color: var(--success); }
+
+    .meta {
+      margin-top: 10px;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    table {
+      margin-top: 14px;
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    th, td {
+      border-bottom: 1px solid var(--border);
+      padding: 8px;
+      text-align: left;
+    }
+
+    th { color: var(--text-muted); font-weight: 600; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Cyberbullying Detection</h1>
+      <p class="subtitle">Paste a message and get a quick harmful-language risk prediction.</p>
+    </div>
+
+    <div class="card">
+      <label for="textInput">Message Text</label>
+      <textarea id="textInput" placeholder="Enter the full text message here..."></textarea>
+
+      <div class="btn-row">
+        <button id="predictBtn" type="button">Predict</button>
+        <button id="cleanBtn" class="btn-secondary" type="button">Load Clean Example</button>
+        <button id="bullyBtn" class="btn-secondary" type="button">Load Bullying Example</button>
+        <button id="clearBtn" class="btn-secondary" type="button">Clear</button>
+        <a class="link-btn" href="/results">View Last Result</a>
+      </div>
+
+      <div id="resultArea" class="result">
+        <h3 style="font-size: 20px;">
+          Prediction:
+          <span id="predClass">-</span>
+          <span id="predPill"></span>
+        </h3>
+        <p id="predMessage" class="meta">-</p>
+        <p id="predConfidence" class="meta">-</p>
+
+        <table>
+          <thead>
+            <tr><th>Class</th><th>Probability</th></tr>
+          </thead>
+          <tbody id="probTable">
+            <tr><td colspan="2" style="color: var(--text-muted);">No probability output yet.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const cleanExample = "I appreciate your help. Thanks for being respectful and supportive.";
+    const bullyingExample = "You are useless and disgusting. Nobody wants you here.";
+
+    const textInput = document.getElementById("textInput");
+    const predictBtn = document.getElementById("predictBtn");
+    const cleanBtn = document.getElementById("cleanBtn");
+    const bullyBtn = document.getElementById("bullyBtn");
+    const clearBtn = document.getElementById("clearBtn");
+
+    const resultArea = document.getElementById("resultArea");
+    const predClass = document.getElementById("predClass");
+    const predPill = document.getElementById("predPill");
+    const predMessage = document.getElementById("predMessage");
+    const predConfidence = document.getElementById("predConfidence");
+    const probTable = document.getElementById("probTable");
+
+    cleanBtn.addEventListener("click", () => { textInput.value = cleanExample; textInput.focus(); });
+    bullyBtn.addEventListener("click", () => { textInput.value = bullyingExample; textInput.focus(); });
+    clearBtn.addEventListener("click", () => { textInput.value = ""; textInput.focus(); });
+
+    predictBtn.addEventListener("click", async () => {
+      const text = textInput.value.trim();
+      if (!text) {
+        alert("Please enter text before predicting.");
+        return;
+      }
+
+      predictBtn.disabled = true;
+      predictBtn.textContent = "Predicting...";
+
+      try {
+        const res = await fetch("/predict", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ text })
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          throw new Error(data.detail || "Prediction failed.");
+        }
+
+        localStorage.setItem("lastCyberbullyingInput", text);
+        localStorage.setItem("lastCyberbullyingPrediction", JSON.stringify(data));
+
+        resultArea.classList.add("active");
+        predClass.textContent = data.predicted_class || "Unknown";
+        predMessage.textContent = data.message || "-";
+        predConfidence.textContent = data.confidence != null
+          ? `Confidence: ${(Number(data.confidence) * 100).toFixed(2)}%`
+          : "Confidence: Not available";
+
+        const harmful = Number(data.prediction) === 1;
+        predPill.className = `pill ${harmful ? "pill-danger" : "pill-safe"}`;
+        predPill.textContent = harmful ? "Harmful" : "Not Harmful";
+
+        const probs = Array.isArray(data.class_probabilities) ? data.class_probabilities : [];
+        if (probs.length === 0) {
+          probTable.innerHTML = `<tr><td colspan="2" style="color: var(--text-muted);">Model did not return class probabilities.</td></tr>`;
+        } else {
+          probTable.innerHTML = probs.map(p => `
+            <tr>
+              <td>${p.class}</td>
+              <td>${(Number(p.probability) * 100).toFixed(2)}%</td>
+            </tr>
+          `).join("");
+        }
+      } catch (err) {
+        alert(err.message || "Prediction failed.");
+      } finally {
+        predictBtn.disabled = false;
+        predictBtn.textContent = "Predict";
+      }
+    });
+  </script>
+</body>
+</html>
+

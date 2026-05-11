@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Latest Prediction | Cyberbullying Detection</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #2563eb;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --border: #e2e8f0;
+      --text: #0f172a;
+      --text-muted: #64748b;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      padding: 40px 20px;
+    }
+
+    .container { max-width: 900px; margin: 0 auto; }
+    .nav { margin-bottom: 16px; }
+    .nav a { color: var(--primary); text-decoration: none; font-weight: 600; }
+    .nav a:hover { text-decoration: underline; }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 22px;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    }
+
+    h1 { font-size: 24px; margin-bottom: 12px; }
+    .muted { color: var(--text-muted); }
+    pre {
+      background: #f1f5f9;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      overflow: auto;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="nav"><a href="/">Back to Detector</a></div>
+
+    <div class="card">
+      <h1 id="headline">No prediction saved yet.</h1>
+      <p id="summary" class="muted">Run a prediction first from the main page.</p>
+    </div>
+
+    <div class="card">
+      <h3 style="margin-bottom: 8px;">Last Input Text</h3>
+      <pre id="inputText">No input saved.</pre>
+    </div>
+
+    <div class="card">
+      <h3 style="margin-bottom: 8px;">Raw Prediction Output</h3>
+      <pre id="jsonOut">No prediction payload saved.</pre>
+    </div>
+  </div>
+
+  <script>
+    const rawInput = localStorage.getItem("lastCyberbullyingInput");
+    const rawPrediction = localStorage.getItem("lastCyberbullyingPrediction");
+
+    const headline = document.getElementById("headline");
+    const summary = document.getElementById("summary");
+    const inputText = document.getElementById("inputText");
+    const jsonOut = document.getElementById("jsonOut");
+
+    if (rawInput) {
+      inputText.textContent = rawInput;
+    }
+
+    if (rawPrediction) {
+      try {
+        const parsed = JSON.parse(rawPrediction);
+        jsonOut.textContent = JSON.stringify(parsed, null, 2);
+        headline.textContent = `Latest class: ${parsed.predicted_class || "Unknown"}`;
+        summary.textContent = parsed.message || "Prediction completed.";
+      } catch {
+        summary.textContent = "Could not parse saved prediction payload.";
+      }
+    }
+  </script>
+</body>
+</html>
+

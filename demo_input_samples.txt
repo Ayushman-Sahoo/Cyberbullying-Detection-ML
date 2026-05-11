@@ -1,0 +1,32 @@
+Project 8 - Cyberbullying Detection Demo Inputs
+===============================================
+
+Usage
+-----
+Enter one full message at a time in the frontend text box.
+
+
+Sample 1 - Clean / supportive
+-----------------------------
+I appreciate how you handled this discussion. Thank you for being respectful.
+
+Sample 2 - Clean / neutral
+--------------------------
+Please submit your assignment before 5 PM and review the comments from your teacher.
+
+Sample 3 - Mildly toxic
+-----------------------
+Your idea is dumb and you never understand anything.
+
+Sample 4 - Explicit bullying
+----------------------------
+You are worthless and nobody wants to talk to you.
+
+Sample 5 - Threatening tone
+---------------------------
+If you show up again, I will make sure you regret it.
+
+Sample 6 - Mixed sentence
+-------------------------
+You did one thing right today, but most of your work is still pathetic.
+

@@ -1,0 +1,35 @@
+Project 8 - Cyberbullying Detection (Command Reference)
+=======================================================
+
+1) Install dependencies
+-----------------------
+cd "path to folder"
+pip install -r requirements.txt
+
+
+2) Train model (interactive dataset input)
+------------------------------------------
+cd "path to folder"
+python model\train.py
+
+When prompted, you can enter:
+- path to dataset file
+- path to dataset folder
+- path to dataset file\*.csv
+- path1.csv, path2.csv
+
+
+3) Train model (non-interactive)
+--------------------------------
+cd "path to folder"
+python model\train.py --data-path "path to dataset file or comma-separated paths"
+
+
+4) Run backend + frontend together
+----------------------------------
+cd "path to folder"
+./run_app.bat
+
+Open:
+http://127.0.0.1:8000
+
