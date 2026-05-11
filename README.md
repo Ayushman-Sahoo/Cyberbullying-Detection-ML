@@ -91,27 +91,27 @@ Cyberbullying Detected
 
 ## Project Screenshots
 
-### Main Frontend Interface
-![Frontend](1.png)
+Starting the server 
+![Frontend](3.png)
 
 ---
 
-### Backend Server Running
-![Backend](2.png)
+### Main Frontend Interface
+![Frontend](4.png)
 
 ---
 
 ### Non-Harmful Prediction Output
-![Non Harmful](3.png)
+![Non Harmful](1.png)
 
 ---
 
 ### Harmful Prediction Output
-![Harmful](4.png)
+![Harmful](2.png)
 
 ---
 
-### Raw Prediction Output
+### Viewing Last result
 ![Raw Output](5.png)
 
 ---
